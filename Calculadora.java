@@ -4,16 +4,14 @@
  * Fecha:10/11/2021
  */
 package Principal;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 public class Calculadora {
 	private static int operacionPrincipal; // para saber si hay que realizar operaciones aritmeticas o logicas
-	private static int numero1; // primer numero de la operacion
-	private static int numero2; // segundo numero de la operacion
+	private static double numero1; // primer numero de la operacion
+	private static double numero2; // segundo numero de la operacion
 	private static int respuesta; // aqui se guardan la respuesta del usuario cuando se pregunta si se quiere
 									// repetir el programa
 	public static int operacion; // aqui se guarda la operacion que se va a realizar
@@ -33,25 +31,25 @@ public class Calculadora {
 	}// cierre del main
 
 //metodo para realizar la suma
-	public static int suma(int numero1, int numero2) {
+	public static double suma(double numero1, double numero2) {
 		return (numero1 + numero2);
 	}
 
 //metodo para realizar la resta
-	public static int resta(int numero1, int numero2) {
+	public static double resta(double numero1, double numero2) {
 		return (numero1 - numero2);
 	}
 
 //metodo para realizar la multiplicacion
-	public static int multiplicacion(int numero1, int numero2) {
+	public static double multiplicacion(double numero1, double numero2) {
 		return (numero1 * numero2);
 	}
 
 //metodo para realizar la division
-	public static double division(int numero1, int numero2) {
+	public static double division(double numero1, double numero2) {
 		double resultadoDivision = 0;
 		try {
-			resultadoDivision = (double) (numero1 / numero2);
+			resultadoDivision = numero1 / numero2;
 		} catch (ArithmeticException e) {
 			System.out.println("Error");
 		}
@@ -60,30 +58,20 @@ public class Calculadora {
 
 //metodo para recibir los valores de los numeros con los que vamos a operar
 	public static void recibirValores() throws NumberFormatException, IOException {
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Escribe el primer numero");
-		numero1 = Integer.parseInt(br.readLine());
-		System.out.println("Escribe el segundo numero");
-		numero2 = Integer.parseInt(br.readLine());
+		numero1 = Integer.parseInt(JOptionPane.showInputDialog("introduce el primer numero"));
+		numero2  = Integer.parseInt(JOptionPane.showInputDialog("introduce el segundo  numero"));
 	}
 
 //metodo para saber la operacion que se tiene que realizar
 	public static void operacion() throws NumberFormatException, IOException {
-		System.out.println("Introduce el numero de la operacion que deseas realizar");
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
 		boolean error = true;
 
 		while (error) {
 			try {
-				operacion = Integer.parseInt(br.readLine());
+				operacion =  Integer.parseInt(JOptionPane.showInputDialog("introduce la operacion que deseas realizar\n 1-------suma \n 2-------resta \n 3------multiplicacion \n 4------division"));
 				error = false;
 			} catch (NumberFormatException e) {
-				System.out.println("Error, caracter desconocido");
-			}
-			catch(IOException io){
-				System.out.println(io.getMessage());
+				JOptionPane.showInputDialog("Error, caracter desconocido");
 			}
 		}
 
@@ -95,13 +83,13 @@ public class Calculadora {
 	}
 
 //metodo para poder repetir el programa
-	public static boolean repetirPrograma(int respuesta) {
-		return (respuesta == 1);
+	public static boolean repetirPrograma(double respuesta2) {
+		return (respuesta2 == 1);
 	}
 
 //metodo donde se encuentra el swich con las operaciones
 	public static void calculadora() throws IOException {
-		int resultado = 0;
+		double resultado = 0;
 		switch (operacion) {
 		case 1:
 			recibirValores();
@@ -118,37 +106,38 @@ public class Calculadora {
 			break;
 		case 4:
 			recibirValores();
-			resultado=division(numero1,numero2);
+			resultado= division(numero1,numero2);
 			System.out.println(resultado);
 
 			break;
 		default:
-			System.out.println("El signo introducido no es valido");
+			numero1 = Integer.parseInt(JOptionPane.showInputDialog("el signo introducido no es valido"));
 			break;
 		}
-		System.out.println("El resultado es " + resultado);
+		JOptionPane.showMessageDialog(null,"El resultado es " + resultado);
 	}
 
 	// metodo para realizar las operaciones logicas
 	public static void menuOperacionesLogicas() throws NumberFormatException, IOException {
 		switch (operacionLogica) {
 		case 1:
-			System.out.println(AND());
+			//System.out.println(AND());
+			JOptionPane.showMessageDialog(null,AND());
 			break;
 		case 2:
-			System.out.println(OR());
+			JOptionPane.showMessageDialog(null,OR());
 			break;
 		case 3:
-			System.out.println(NOT());
+			JOptionPane.showMessageDialog(null,NOT());
 			break;
 		case 4:
-			System.out.println(AND1simbolo());
+			JOptionPane.showMessageDialog(null,AND1simbolo());
 			break;
 		case 5:
-			System.out.println(OR1simbolo());
+			JOptionPane.showMessageDialog(null,OR1simbolo());
 			break;
 		case 6:
-			System.out.println(XOR());
+			JOptionPane.showMessageDialog(null,XOR());
 			break;
 		}
 
@@ -158,24 +147,16 @@ public class Calculadora {
 	public static void operacionPrincipal() throws NumberFormatException, IOException {
 		do {
 			boolean error = true;
-			InputStreamReader isr = new InputStreamReader(System.in);
-			BufferedReader br = new BufferedReader(isr);
-			System.out.println("Introduce la operacion que deseas realizar");
-			System.out.println("1------Operaciones aritmeticas");
-			System.out.println("2------Operaciones logicas");
 			while (error) {
 				try {
-					operacionPrincipal = Integer.parseInt(br.readLine());
+					operacionPrincipal = Integer.parseInt(JOptionPane.showInputDialog("intruduce la operacion que deseas realizar\n 1------Operaciones aritmeticas\n 2------Operaciones logicas"));
 					error = false;
 				} catch (NumberFormatException e) {
-					System.out.println("Error, caracter desconocido");
-				}
-				catch(IOException io) {
-					System.out.println(io.getMessage());
+					JOptionPane.showMessageDialog(null,"Error, caracter desconocido");
 				}
 				if ((operacionPrincipal < 1 || operacionPrincipal > 2))
-					;
-				System.out.println("Error, solo se admite 1 o 2");
+
+					JOptionPane.showMessageDialog(null,"Error, solo se admite 1 o 2");
 			}
 
 		} while (operacionPrincipal < 1 || operacionPrincipal > 2);
@@ -186,12 +167,10 @@ public class Calculadora {
 	public static void menuPrincipal() throws NumberFormatException, IOException {
 		switch (operacionPrincipal) {
 		case 1:
-			menuOpciones();
 			operacionAritmetica();
 			calculadora();
 			break;
 		case 2:
-			menuLogico();
 			operacionLogica();
 			menuOperacionesLogicas();
 		}
@@ -200,65 +179,33 @@ public class Calculadora {
 
 //metodo para que el usuario indique si quiere volver a repetir el programa
 	public static void volverARepetir() throws NumberFormatException, IOException {
-		boolean error = true;
+		do {
+			boolean error = true;
+			while (error) {
+				try {
+					respuesta = Integer.parseInt(JOptionPane.showInputDialog("Quieres hacer otra operacion\n 1-------si \n 2-------no"));
+					error = false;
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null,"Error, caracter desconocido");
+				}
+				if ((respuesta < 1 || respuesta > 2))
 
-		System.out.println("Quieres hacer otra operacion?");
-		System.out.println("1-----si");
-		System.out.println("2-----no");
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		while (error) {
-			try {
-				respuesta = Integer.parseInt(br.readLine());
-				error = false;
-			} catch (NumberFormatException e) {
-				System.out.println("Error, caracter desconocido");
+					JOptionPane.showMessageDialog(null,"Error, solo se admite 1 o 2");
 			}
-		}
+
+		} while (respuesta < 1 || respuesta > 2);
+
 
 	}
 
 	// metodo para mostrar las operaciones disponibles
-	public static void menuOpciones() {
-		System.out.println("Introduce la operacion que deseas realizar");
-		System.out.println("1 ----- Suma");
-		System.out.println("2 ----- Resta");
-		System.out.println("3 ----- Multiplicacion");
-		System.out.println("4 ----- Division");
-	}
 
-//menu operaciones logicas
-	public static void menuLogico() {
-		System.out.println("Introduce la operacion que deseas realizar");
-		System.out.println("1 -----AND");
-		System.out.println("2 ----- OR");
-		System.out.println("3 ----- NOT");
-		System.out.println("4 ----- AND(|)");
-		System.out.println("5 ----- OR(|)");
-		System.out.println("6 ----- XOR");
-	}
+
 
 //metodo para realizar la operacion AND
 	public static boolean AND() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
-		int estado;
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Quieres poner el operando 1 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-
-		if (estado == 1) {
-			logico1 = true;
-		}
-		System.out.println("Quieres poner el operando 2 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico2 = true;
-		}
+		 recibirValoresLogicos();
 		resultadoLogico = (logico1 && logico2);
 		return resultadoLogico;
 	}
@@ -266,39 +213,14 @@ public class Calculadora {
 	// metodo para realizar la operacion logica OR
 	public static boolean OR() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
-		int estado;
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Quieres poner el operando 1 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico1 = true;
-		}
-		System.out.println("Quieres poner el operando 2 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico2 = true;
-		}
+		 recibirValoresLogicos();
 		resultadoLogico = (logico1 || logico2);
 		return resultadoLogico;
 	}
 
 	public static boolean NOT() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
-		int estado = 0;
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Quieres poner el operando 1 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico1 = true;
-		}
+		 recibirValoresLogicosNOT();
 		resultadoLogico = (!logico1);
 		return resultadoLogico;
 	}
@@ -306,25 +228,7 @@ public class Calculadora {
 //metodo para realizar la operacion AND con un solo simbolo
 	public static boolean AND1simbolo() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
-		int estado;
-		Scanner entrada = new Scanner(System.in);
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Quieres poner el operando 1 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		entrada.close();
-		if (estado == 1) {
-			logico1 = true;
-		}
-		System.out.println("Quieres poner el operando 2 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico2 = true;
-		}
+		 recibirValoresLogicos();
 		resultadoLogico = (logico1 & logico2);
 		return resultadoLogico;
 	}
@@ -332,23 +236,7 @@ public class Calculadora {
 //metodo para realizar la operacion logica OR con un simbolo
 	public static boolean OR1simbolo() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
-		int estado;
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Quieres poner el operando 1 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico1 = true;
-		}
-		System.out.println("Quieres poner el operando 2 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico2 = true;
-		}
+		 recibirValoresLogicos();
 		resultadoLogico = (logico1 | logico2);
 		return resultadoLogico;
 	}
@@ -356,23 +244,7 @@ public class Calculadora {
 //metodo para realizar la operacion logica XOR
 	public static boolean XOR() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
-		int estado;
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		System.out.println("Quieres poner el operando 1 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico1 = true;
-		}
-		System.out.println("Quieres poner el operando 2 a true?");
-		System.out.println("1----si");
-		System.out.println("2-----no");
-		estado = Integer.parseInt(br.readLine());
-		if (estado == 1) {
-			logico2 = true;
-		}
+		recibirValoresLogicos();
 		resultadoLogico = (logico1 ^ logico2);
 		return resultadoLogico;
 	}
@@ -380,14 +252,12 @@ public class Calculadora {
 	// Menu para saber que operacion logica quiere realizar el usuario
 	public static void operacionLogica() throws NumberFormatException, IOException {
 		boolean error = true;
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
 		while (error) {
 			try {
-				operacionLogica = Integer.parseInt(br.readLine());
+				operacionLogica = Integer.parseInt(JOptionPane.showInputDialog("intruduce la operacion que deseas realizar\n 1-----AND\n 2-----OR \n 3----NOT \n 4 ----AND(&)\n 5----OR(|) \n 6----XOR"));
 				error = false;
 			} catch (NumberFormatException e) {
-				System.out.println("Error, caracter no valido");
+				JOptionPane.showInputDialog(null, "Error, caracter no valido");
 			}
 		}
 
@@ -397,8 +267,41 @@ public class Calculadora {
 		do { // esto es para que no se puede meter un numero que no sea valido
 			operacion();
 			if (operacion < 1 || operacion > 4) // este mensaje solo sale si el numero no es valido
-				System.out.println("error, el numero introducido no es valido, intentelo de nuevo");
+				JOptionPane.showMessageDialog(null,"El numero introducido no es valido, intentelo de nuevo");
 		} while (controlErroresOperacion(operacion));
 	}
-
+	public static void recibirValoresLogicos() {
+		int estado;
+		do {
+			estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el primer operando a true?\n 1------si\n2-----no"));
+			if((estado < 1 || estado > 2))
+				JOptionPane.showMessageDialog(null, "Error, solo se admite 1 o 2");
+		}while(estado < 1 || estado > 2);
+		
+		if (estado == 1) {
+			logico1 = true;
+		}
+		do {
+			estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el segundo operando a true?\n 1------si\n2-----no"));
+			if((estado < 1 || estado > 2))
+				JOptionPane.showMessageDialog(null, "Error, solo se admite 1 o 2");
+		}while(estado < 1 || estado > 2);
+		
+		if (estado == 1) {
+			logico2 = true;
+		}
+	}
+	public static void recibirValoresLogicosNOT() {
+		int estado;
+		do {
+			estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el primer operando a true?\n 1------si\n2-----no"));
+			if((estado < 1 || estado > 2))
+				JOptionPane.showMessageDialog(null, "Error, solo se admite 1 o 2");
+		}while(estado < 1 || estado > 2);
+		
+		if (estado == 1) {
+			logico1 = true;
+		}
+		
+	}
 }// cierre de la clase
