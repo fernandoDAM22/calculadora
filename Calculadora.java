@@ -31,27 +31,27 @@ public class Calculadora {
 	}// cierre del main
 
 //metodo para realizar la suma
-	public static double suma(double numero1, double numero2) {
+	public static double suma() {
 		return (numero1 + numero2);
 	}
 
 //metodo para realizar la resta
-	public static double resta(double numero1, double numero2) {
+	public static double resta() {
 		return (numero1 - numero2);
 	}
 
 //metodo para realizar la multiplicacion
-	public static double multiplicacion(double numero1, double numero2) {
+	public static double multiplicacion() {
 		return (numero1 * numero2);
 	}
 
 //metodo para realizar la division
-	public static double division(double numero1, double numero2) {
+	public static double division() {
 		double resultadoDivision = 0;
 		try {
 			resultadoDivision = numero1 / numero2;
 		} catch (ArithmeticException e) {
-			System.out.println("Error");
+			JOptionPane.showMessageDialog(null, "Error");
 		}
 		return resultadoDivision;
 	}
@@ -93,20 +93,20 @@ public class Calculadora {
 		switch (operacion) {
 		case 1:
 			recibirValores();
-			resultado = suma(numero1, numero2);
+			resultado = suma();
 			break;
 
 		case 2:
 			recibirValores();
-			resultado = resta(numero1, numero2);
+			resultado = resta();
 			break;
 		case 3:
 			recibirValores();
-			resultado = multiplicacion(numero1, numero2);
+			resultado = multiplicacion();
 			break;
 		case 4:
 			recibirValores();
-			resultado= division(numero1,numero2);
+			resultado= division();
 			System.out.println(resultado);
 
 			break;
@@ -271,9 +271,15 @@ public class Calculadora {
 		} while (controlErroresOperacion(operacion));
 	}
 	public static void recibirValoresLogicos() {
-		int estado;
+		int estado=0;
 		do {
-			estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el primer operando a true?\n 1------si\n2-----no"));
+			try {
+				estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el primer operando a true?\n 1------si\n2-----no"));
+			}
+			catch(NumberFormatException e){
+				JOptionPane.showMessageDialog(null, "Error,caracter desconocido");
+			}
+			
 			if((estado < 1 || estado > 2))
 				JOptionPane.showMessageDialog(null, "Error, solo se admite 1 o 2");
 		}while(estado < 1 || estado > 2);
@@ -282,7 +288,13 @@ public class Calculadora {
 			logico1 = true;
 		}
 		do {
-			estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el segundo operando a true?\n 1------si\n2-----no"));
+			try{
+				estado = Integer.parseInt(JOptionPane.showInputDialog("Quieres poner el segundo operando a true?\n 1------si\n2-----no"));
+			}
+			catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Error, caracter desconocido");
+			}
+			
 			if((estado < 1 || estado > 2))
 				JOptionPane.showMessageDialog(null, "Error, solo se admite 1 o 2");
 		}while(estado < 1 || estado > 2);
