@@ -58,8 +58,29 @@ public class Calculadora {
 
 //metodo para recibir los valores de los numeros con los que vamos a operar
 	public static void recibirValores() throws NumberFormatException, IOException {
-		numero1 = Integer.parseInt(JOptionPane.showInputDialog("introduce el primer numero"));
-		numero2  = Integer.parseInt(JOptionPane.showInputDialog("introduce el segundo  numero"));
+		boolean error = true;
+		while(error){
+			try {
+				numero1 = Integer.parseInt(JOptionPane.showInputDialog("introduce el primer numero"));
+				error = false;
+			}
+			catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Error, caracter desconocido");
+			}
+		}
+		error = true;
+		while(error){
+			try {
+				numero2 = Integer.parseInt(JOptionPane.showInputDialog("introduce el segundo numero"));
+				error = false;
+			}
+			catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Error, caracter desconocido");
+			}
+		}
+		
+		
+		
 	}
 
 //metodo para saber la operacion que se tiene que realizar
@@ -71,7 +92,7 @@ public class Calculadora {
 				operacion =  Integer.parseInt(JOptionPane.showInputDialog("introduce la operacion que deseas realizar\n 1-------suma \n 2-------resta \n 3------multiplicacion \n 4------division"));
 				error = false;
 			} catch (NumberFormatException e) {
-				JOptionPane.showInputDialog("Error, caracter desconocido");
+				JOptionPane.showMessageDialog( null, "Error, caracter desconocido");
 			}
 		}
 
@@ -149,7 +170,7 @@ public class Calculadora {
 			boolean error = true;
 			while (error) {
 				try {
-					operacionPrincipal = Integer.parseInt(JOptionPane.showInputDialog("intruduce la operacion que deseas realizar\n 1------Operaciones aritmeticas\n 2------Operaciones logicas"));
+					operacionPrincipal = Integer.parseInt(JOptionPane.showInputDialog("introduce la operacion que deseas realizar\n 1------Operaciones aritmeticas\n 2------Operaciones logicas"));
 					error = false;
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null,"Error, caracter desconocido");
@@ -221,7 +242,7 @@ public class Calculadora {
 	public static boolean NOT() throws NumberFormatException, IOException {
 		boolean resultadoLogico;
 		 recibirValoresLogicosNOT();
-		resultadoLogico = (!logico1);
+		resultadoLogico = (!logico1); 
 		return resultadoLogico;
 	}
 
@@ -256,12 +277,19 @@ public class Calculadora {
 			try {
 				operacionLogica = Integer.parseInt(JOptionPane.showInputDialog("intruduce la operacion que deseas realizar\n 1-----AND\n 2-----OR \n 3----NOT \n 4 ----AND(&)\n 5----OR(|) \n 6----XOR"));
 				error = false;
+				if (operacionLogica < 1 || operacionLogica > 7) {
+					JOptionPane.showMessageDialog(null, "Error, numero no valido");
+					error = true;
+				}
+				
 			} catch (NumberFormatException e) {
-				JOptionPane.showInputDialog(null, "Error, caracter no valido");
+				JOptionPane.showMessageDialog(null, "Error, caracter no valido");
 			}
+			
 		}
 
 	}
+	//Metodo para indicar la operacion logica que queremos realizar
 
 	public static void operacionAritmetica() throws NumberFormatException, IOException {
 		do { // esto es para que no se puede meter un numero que no sea valido
@@ -270,6 +298,7 @@ public class Calculadora {
 				JOptionPane.showMessageDialog(null,"El numero introducido no es valido, intentelo de nuevo");
 		} while (controlErroresOperacion(operacion));
 	}
+	//Metodo para recibir los valores para las operaciones logicas
 	public static void recibirValoresLogicos() {
 		int estado=0;
 		do {
@@ -303,6 +332,7 @@ public class Calculadora {
 			logico2 = true;
 		}
 	}
+	//metodo para recibir el unico valor de la operacion NOT
 	public static void recibirValoresLogicosNOT() {
 		int estado;
 		do {
